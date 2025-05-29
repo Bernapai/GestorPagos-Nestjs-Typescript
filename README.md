@@ -20,8 +20,7 @@ Este sistema se compone de varios **microservicios independientes** que trabajan
 El sistema está compuesto por los siguientes microservicios:
 
 ### 1. Payment Service (Servicio de Pagos)
-- Procesa pagos con métodos como tarjeta de crédito, PayPal, MercadoPago, etc.
-- Valida la información del usuario y los datos de la tarjeta.
+- Procesa pagos (Simulados).
 - Emite eventos como `pago exitoso` o `pago fallido` para que otros servicios reaccionen.
 
 ### 2. Invoice Service (Servicio de Facturación)
