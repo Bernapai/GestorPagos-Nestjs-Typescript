@@ -1,7 +1,38 @@
 import { Controller } from '@nestjs/common';
-import { UserService } from './user.service';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { UsersService } from './user.service';
+import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
+import { User } from './user.entity';
 
-@Controller('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+@Controller()
+export class UsersController {
+  constructor(private readonly usersService: UsersService) { }
+
+  @MessagePattern({ cmd: 'create-user' })
+  async create(@Payload() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.create(createUserDto);
+  }
+
+  @MessagePattern({ cmd: 'get-users' })
+  async findAll(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
+
+  @MessagePattern({ cmd: 'get-user' })
+  async findOne(@Payload() id: number): Promise<User> {
+    return this.usersService.findOne(id);
+  }
+
+  @MessagePattern({ cmd: 'update-user' })
+  async update(
+    @Payload() payload: { id: number; dto: UpdateUserDto },
+  ): Promise<User> {
+    return this.usersService.update(payload.id, payload.dto);
+  }
+
+  @MessagePattern({ cmd: 'delete-user' })
+  async remove(@Payload() id: number): Promise<void> {
+    return this.usersService.remove(id);
+  }
 }
