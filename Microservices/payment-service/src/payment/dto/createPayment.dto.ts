@@ -23,4 +23,7 @@ export class CreatePaymentDto {
   @IsOptional()
   @IsDateString()
   paidAt?: string; // fecha pago
+
+  @IsString()
+  phoneNumber: string; // nuevo campo //
 }

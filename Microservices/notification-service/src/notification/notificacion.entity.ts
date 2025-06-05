@@ -1,9 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Notification {
@@ -18,10 +13,4 @@ export class Notification {
 
   @Column()
   status: string; // 'sent', 'failed', etc.
-
-  @Column({ nullable: true })
-  providerMessageId?: string;
-
-  @CreateDateColumn()
-  sentAt: Date;
 }
