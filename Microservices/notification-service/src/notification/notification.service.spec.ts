@@ -6,7 +6,6 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Twilio } from 'twilio';
 import { MessageListInstance } from 'twilio/lib/rest/api/v2010/account/message';
-import { create } from 'domain';
 
 describe('NotificationService', () => {
   let service: NotificationService;
@@ -83,7 +82,8 @@ describe('NotificationService', () => {
         status: 'pending',
       });
 
-      expect(mockMessages.create).toHaveBeenCalledWith({ // Error en mockMessages.create
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      expect(mockMessages.create).toHaveBeenCalledWith({
         body: sendSmsDto.message,
         from: process.env.TWILIO_PHONE_NUMBER,
         to: sendSmsDto.to,
