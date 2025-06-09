@@ -16,6 +16,16 @@ import { DatabaseModule } from 'src/database/database.module'; // Asegúrate de 
         },
       },
     ]),
+    ClientsModule.register([
+      {
+        name: 'INVOICE_SERVICE', // Nombre para inyectar
+        transport: Transport.TCP, // Puede ser también RabbitMQ, Kafka, etc.
+        options: {
+          host: 'localhost', // Dirección del microservicio de notificaciones
+          port: 3001, // Puerto en que se levanta Notification
+        },
+      },
+    ]),
     DatabaseModule, // Asegúrate de que este módulo exista y esté configurado correctamente
   ],
   controllers: [PaymentController],

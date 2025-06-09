@@ -1,18 +1,11 @@
+// src/database/database.module.ts
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres', // Tipo de base de datos
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'Juanber123()',
-      database: 'innvoice_service', // Nombre de la base de datos
-      entities: [__dirname + '/../**/*.entity.ts'],
-      synchronize: true,
-    }),
+    MongooseModule.forRoot('mongodb://localhost:27017/invoice_service'),
   ],
+  exports: [MongooseModule],
 })
 export class DatabaseModule { }

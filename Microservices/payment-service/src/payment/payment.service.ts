@@ -15,6 +15,9 @@ export class PaymentService {
 
     @Inject('NOTIFICATION_SERVICE') // Inyectamos el client proxy
     private readonly notificationClient: ClientProxy,
+
+    @Inject('INVOICE_SERVICE') // Inyectamos el client proxy
+    private readonly invoicenClient: ClientProxy,
   ) { }
 
   async create(createPaymentDto: CreatePaymentDto): Promise<Payment> {
@@ -30,6 +33,18 @@ export class PaymentService {
         }),
       );
     }
+
+    // Llamar al microservicio de facturas
+    await lastValueFrom(
+      this.invoicenClient.send('generate_invoice', {
+        method: createPaymentDto.method,
+        amount: createPaymentDto.amount,
+        currency: createPaymentDto.currency,
+        status: createPaymentDto.status,
+        transactionId: savedPayment.id, // Usamos el ID ya generado como transactionId
+        userId: createPaymentDto.userId,
+      }),
+    );
 
     return savedPayment;
   }

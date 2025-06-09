@@ -1,19 +1,28 @@
-// create-invoice.dto.ts
-import { IsString, IsNumber, IsDateString, IsUUID } from 'class-validator';
+// src/invoice/dto/payment.dto.ts
+import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
 
-export class CreateInvoiceDto {
-  @IsUUID()
-  readonly userId: string;
-
-  @IsUUID()
-  readonly paymentId: string;
+export class PaymentDto {
+  @IsString()
+  @IsNotEmpty()
+  method: string;
 
   @IsNumber()
-  readonly amount: number;
+  @IsNotEmpty()
+  amount: number;
 
   @IsString()
-  readonly currency: string;
+  @IsNotEmpty()
+  currency: string;
 
-  @IsDateString()
-  readonly date: string; // o podés usar Date si preferís
+  @IsString()
+  @IsNotEmpty()
+  status: string;
+
+  @IsString()
+  @IsNotEmpty()
+  transactionId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
 }
