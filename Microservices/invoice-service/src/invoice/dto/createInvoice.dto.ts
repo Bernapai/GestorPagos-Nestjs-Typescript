@@ -1,7 +1,7 @@
 // src/invoice/dto/payment.dto.ts
 import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
 
-export class PaymentDto {
+export class invoiceDto {
   @IsString()
   @IsNotEmpty()
   method: string;
