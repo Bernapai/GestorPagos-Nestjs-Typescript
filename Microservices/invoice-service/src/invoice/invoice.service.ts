@@ -65,4 +65,12 @@ export class InvoiceService {
     const pdfBytes = await pdfDoc.save();
     return Buffer.from(pdfBytes);
   }
+
+  async findAll(): Promise<Invoice[]> {
+    return this.invoiceModel.find().exec();
+  }
+
+  async findOne(id: string): Promise<Invoice | null> {
+    return this.invoiceModel.findById(id).exec();
+  }
 }
