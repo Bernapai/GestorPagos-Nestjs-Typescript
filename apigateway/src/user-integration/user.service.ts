@@ -5,7 +5,6 @@ import { CreateUserDto } from '../../../Microservices/user-service/src/user/dto/
 import { UpdateUserDto } from '../../../Microservices/user-service/src/user/dto/updateUser.dto';
 import { User } from '../../../Microservices/user-service/src/user/user.entity';
 
-
 @Injectable()
 export class UsersService {
   constructor(@Inject('USERS_SERVICE') private readonly client: ClientProxy) { }
