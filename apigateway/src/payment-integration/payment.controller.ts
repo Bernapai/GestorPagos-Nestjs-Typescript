@@ -7,11 +7,14 @@ import {
   Patch,
   Delete,
   ParseIntPipe,
+  UseGuards
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from '../../../Microservices/payment-service/src/payment/dto/createPayment.dto';
 import { UpdatePaymentDto } from '../../../Microservices/payment-service/src/payment/dto/updatePayment.dto';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('payments')
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) { }
