@@ -12,6 +12,7 @@ Este sistema se compone de varios **microservicios independientes** que trabajan
 - **Mensajería**: RabbitMQ o Kafka
 - **Autenticación**: JWT u OAuth2
 - **Notificaciones**: SendGrid, Twilio
+- **Testing**: Jest
 
 ---
 
