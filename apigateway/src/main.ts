@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   try {
@@ -14,6 +15,17 @@ async function bootstrap() {
         transform: true, // Convierte tipos (por ejemplo, string a number)
       }),
     );
+
+    // Configuración de Swagger
+    const config = new DocumentBuilder()
+      .setTitle('API Gateway')
+      .setDescription('Documentación de la API Gateway del sistema de gestión de pagos')
+      .setVersion('1.0')
+      .addBearerAuth() // Añade autenticación Bearer
+      .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document);
 
     const port = process.env.PORT ?? 3000;
     await app.listen(port);
