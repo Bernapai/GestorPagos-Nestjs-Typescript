@@ -6,11 +6,13 @@ import {
   Delete,
   Body,
   Param,
+  UseGuards
 } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { CreateUserDto } from '../../../Microservices/user-service/src/user/dto/createUser.dto';
 import { UpdateUserDto } from '../../../Microservices/user-service/src/user/dto/updateUser.dto';
 import { User } from '../../../Microservices/user-service/src/user/user.entity';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -30,17 +32,23 @@ export class UsersController {
   findOne(@Param('id') id: string): Promise<User> {
     return this.usersService.findOne(Number(id));
   }
+<<<<<<< HEAD
 
   @Get('name/:name')
   findByName(@Param('name') name: string): Promise<User | null> {
     return this.usersService.findByName(name);
   }
 
+=======
+  
+  @UseGuards(JwtAuthGuard)
+>>>>>>> 52ffe854f0007f7550f850f38f8adcd79b085b6f
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: UpdateUserDto): Promise<User> {
     return this.usersService.update(Number(id), dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
     return this.usersService.remove(Number(id));
