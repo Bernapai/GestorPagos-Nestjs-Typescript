@@ -23,6 +23,12 @@ export class UsersService {
     return firstValueFrom(this.client.send({ cmd: 'get-user' }, id));
   }
 
+  async findByName(name: string): Promise<User | null> {
+    return firstValueFrom(
+      this.client.send({ cmd: 'find-user-by-name' }, name),
+    );
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     return firstValueFrom(
       this.client.send({ cmd: 'update-user' }, { id, dto: updateUserDto }),

@@ -63,7 +63,8 @@ describe('PaymentController', () => {
         userId: 'user1',
         status: 'pending',
         transactionId: '',
-        paidAt: '2025-06-01T10:00:00Z', // string ISO in DTO
+        paidAt: '2025-06-01T10:00:00Z',
+        phoneNumber: ''
       };
 
       const result = await controller.create(dto);

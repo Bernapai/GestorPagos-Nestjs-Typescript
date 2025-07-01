@@ -1,27 +1,21 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserModule } from '../../../Microservices/user-service/src/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
-import { User } from '../../../Microservices/user-service/src/user/user.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres', // Tipo de base de datos
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'Juanber123()',
-      database: 'users_pagos',
-      entities: [User],
-      synchronize: true,
-    }),
     UserModule,
-    JwtModule.register({
-      secret: 'JksIJ093jJSo',
-      signOptions: { expiresIn: '1h' },
+    ConfigModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('SECRET_KEY'),
+        signOptions: { expiresIn: configService.get<string>('EXPIRES_IN') },
+      }),
     }),
   ],
   providers: [AuthService],

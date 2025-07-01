@@ -31,6 +31,11 @@ export class UsersController {
     return this.usersService.update(payload.id, payload.dto);
   }
 
+  @MessagePattern({ cmd: 'find-user-by-name' })
+  async findByName(@Payload() name: string): Promise<User | null> {
+    return this.usersService.findByName(name);
+  }
+
   @MessagePattern({ cmd: 'delete-user' })
   async remove(@Payload() id: number): Promise<void> {
     return this.usersService.remove(id);

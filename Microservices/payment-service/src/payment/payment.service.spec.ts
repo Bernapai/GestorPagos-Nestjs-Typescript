@@ -61,6 +61,7 @@ describe('PaymentService', () => {
         status: 'pending',
         transactionId: '',
         paidAt: '',
+        phoneNumber: ''
       };
       mockRepository.create.mockReturnValue(dto);
 
