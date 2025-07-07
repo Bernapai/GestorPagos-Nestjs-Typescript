@@ -2,8 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Twilio } from 'twilio';
-import { Notification } from './notificacion.entity';
-import { SendSmsDto } from './dto/createNotification.dto';
+import { Notification } from '../entities/notificacion.entity';
+import { SendSmsDto } from '../dto/createNotification.dto';
 
 @Injectable()
 export class NotificationService {

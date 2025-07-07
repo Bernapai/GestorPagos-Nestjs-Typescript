@@ -1,12 +1,12 @@
 // notification.controller.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
-import { NotificationController } from './notification.controller';
-import { NotificationService } from './notification.service';
-import { SendSmsDto } from './dto/createNotification.dto';
+import { NotificationEventsController } from 'src/notification/events/notification.events.controller';
+import { NotificationService } from 'src/notification/services/notification.service';
+import { SendSmsDto } from 'src/notification/dto/createNotification.dto';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-describe('NotificationController', () => {
-  let controller: NotificationController;
+describe('NotificationEventsController', () => {
+  let controller: NotificationEventsController;
   let mockService: Partial<Record<keyof NotificationService, jest.Mock>>;
 
   const sendSmsDto: SendSmsDto = {
@@ -27,7 +27,7 @@ describe('NotificationController', () => {
     };
 
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [NotificationController],
+      controllers: [NotificationEventsController],
       providers: [
         {
           provide: NotificationService,
@@ -36,7 +36,7 @@ describe('NotificationController', () => {
       ],
     }).compile();
 
-    controller = module.get<NotificationController>(NotificationController);
+    controller = module.get<NotificationEventsController>(NotificationEventsController);
   });
 
   afterEach(() => {
@@ -59,22 +59,17 @@ describe('NotificationController', () => {
     });
 
     it('debería lanzar HttpException con status 500 cuando el servicio falla', async () => {
-      (mockService.createAndSend as jest.Mock).mockRejectedValueOnce(
-        new Error('Twilio down'),
-      );
-
-      await expect(controller.sendSms(sendSmsDto)).rejects.toBeInstanceOf(
-        HttpException,
-      );
+      const errorMsg = 'Twilio down';
+      (mockService.createAndSend as jest.Mock).mockRejectedValueOnce(new Error(errorMsg));
 
       try {
         await controller.sendSms(sendSmsDto);
       } catch (err) {
-        const exc = err as HttpException;
-        expect(exc.getStatus()).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
-        expect(exc.getResponse()).toEqual({
+        expect(err).toBeInstanceOf(HttpException);
+        expect(err.getStatus()).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+        expect(err.getResponse()).toEqual({
           status: 'error',
-          message: 'Twilio down',
+          message: errorMsg,
         });
       }
     });

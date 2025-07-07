@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { NotificationModule } from './notification/notification.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Notification } from './notification/notificacion.entity';
+import { Notification } from './notification/entities/notificacion.entity';
 import { DatabaseModule } from './database/database.module';
 
 @Module({

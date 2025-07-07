@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { NotificationService } from './notification.service';
-import { Notification } from './notificacion.entity';
-import { SendSmsDto } from './dto/createNotification.dto';
+import { NotificationService } from 'src/notification/services/notification.service';
+import { Notification } from 'src/notification/entities/notificacion.entity';
+import { SendSmsDto } from 'src/notification/dto/createNotification.dto';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Twilio } from 'twilio';
@@ -82,30 +82,34 @@ describe('NotificationService', () => {
         status: 'pending',
       });
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
       expect(mockMessages.create).toHaveBeenCalledWith({
         body: sendSmsDto.message,
         from: process.env.TWILIO_PHONE_NUMBER,
         to: sendSmsDto.to,
       });
 
+      expect(mockRepo.save).toHaveBeenCalledTimes(1);
       expect(result.status).toBe('sent');
     });
 
-    it('should mark notification as failed on error', async () => {
-      (mockMessages.create as jest.Mock).mockRejectedValueOnce(
-        new Error('Twilio error'),
-      );
+    it('should mark notification as failed and rethrow error if SMS fails', async () => {
+      const errorMsg = 'Twilio error';
+      (mockMessages.create as jest.Mock).mockRejectedValueOnce(new Error(errorMsg));
 
-      await expect(service.createAndSend(sendSmsDto)).rejects.toThrow(
-        'Twilio error',
-      );
+      await expect(service.createAndSend(sendSmsDto)).rejects.toThrow(errorMsg);
 
-      expect(mockRepo.save).toHaveBeenCalledTimes(2);
+      // Debe guardar primero con estado 'pending'
+      expect(mockRepo.save).toHaveBeenNthCalledWith(1, {
+        ...mockNotification,
+        status: 'pending',
+      });
+
+      // Luego, debe guardar con estado 'failed'
       expect(mockRepo.save).toHaveBeenNthCalledWith(2, {
         ...mockNotification,
         status: 'failed',
       });
     });
   });
+
 });
