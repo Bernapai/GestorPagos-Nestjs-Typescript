@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PaymentService } from './payment.service';
-import { PaymentController } from './payment.controller';
+import { PaymentController } from './controller/payment.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { DatabaseModule } from 'src/database/database.module'; // Asegúrate de que este módulo exista
 

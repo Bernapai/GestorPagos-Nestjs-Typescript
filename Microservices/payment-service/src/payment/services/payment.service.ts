@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { CreatePaymentDto } from './dto/createPayment.dto';
-import { UpdatePaymentDto } from './dto/updatePayment.dto';
-import { Payment } from './payment.entity';
+import { CreatePaymentDto } from '../dto/createPayment.dto';
+import { UpdatePaymentDto } from '../dto/updatePayment.dto';
+import { Payment } from '../entities/payment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ClientProxy } from '@nestjs/microservices';

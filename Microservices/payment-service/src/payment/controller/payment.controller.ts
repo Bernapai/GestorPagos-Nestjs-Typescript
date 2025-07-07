@@ -1,8 +1,8 @@
 import { Controller } from '@nestjs/common';
-import { PaymentService } from './payment.service';
-import { CreatePaymentDto } from './dto/createPayment.dto';
-import { UpdatePaymentDto } from './dto/updatePayment.dto';
-import { Payment } from './payment.entity';
+import { PaymentService } from '../services/payment.service';
+import { CreatePaymentDto } from '../dto/createPayment.dto';
+import { UpdatePaymentDto } from '../dto/updatePayment.dto';
+import { Payment } from '../entities/payment.entity';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('payment')

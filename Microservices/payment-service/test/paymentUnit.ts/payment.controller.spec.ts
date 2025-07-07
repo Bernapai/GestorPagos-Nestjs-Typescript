@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PaymentController } from './payment.controller';
-import { PaymentService } from './payment.service';
-import { CreatePaymentDto } from './dto/createPayment.dto';
-import { UpdatePaymentDto } from './dto/updatePayment.dto';
-import { Payment } from './payment.entity';
+import { PaymentController } from '../../src/payment/controller/payment.controller';
+import { PaymentService } from 'src/payment/services/payment.service';
+import { CreatePaymentDto } from '../../src/payment/dto/createPayment.dto';
+import { UpdatePaymentDto } from '../../src/payment/dto/updatePayment.dto';
+import { Payment } from '../../src/payment/entities/payment.entity';
 
 describe('PaymentController', () => {
   let controller: PaymentController;
@@ -72,6 +72,23 @@ describe('PaymentController', () => {
       expect(mockPaymentService.create).toHaveBeenCalledWith(dto);
       expect(result).toEqual(mockPayment);
     });
+
+    it('should throw error if service.create fails', async () => {
+      const dto: CreatePaymentDto = {
+        method: 'paypal',
+        amount: 150,
+        currency: 'USD',
+        userId: 'user1',
+        status: 'pending',
+        transactionId: '',
+        paidAt: '2025-06-01T10:00:00Z',
+        phoneNumber: ''
+      };
+
+      mockPaymentService.create.mockRejectedValueOnce(new Error('Service error'));
+
+      await expect(controller.create(dto)).rejects.toThrow('Service error');
+    });
   });
 
   describe('findAll', () => {
@@ -80,6 +97,12 @@ describe('PaymentController', () => {
 
       expect(mockPaymentService.findAll).toHaveBeenCalled();
       expect(result).toEqual(mockPaymentsArray);
+    });
+
+    it('should throw error if service.findAll fails', async () => {
+      mockPaymentService.findAll.mockRejectedValueOnce(new Error('DB error'));
+
+      await expect(controller.findAll()).rejects.toThrow('DB error');
     });
   });
 
@@ -90,6 +113,12 @@ describe('PaymentController', () => {
 
       expect(mockPaymentService.findOne).toHaveBeenCalledWith(id);
       expect(result).toEqual(mockPayment);
+    });
+
+    it('should throw error if service.findOne fails', async () => {
+      mockPaymentService.findOne.mockRejectedValueOnce(new Error('Not found'));
+
+      await expect(controller.findOne(1)).rejects.toThrow('Not found');
     });
   });
 
@@ -109,6 +138,18 @@ describe('PaymentController', () => {
       expect(mockPaymentService.update).toHaveBeenCalledWith(id, dto);
       expect(result).toEqual(mockPayment);
     });
+
+    it('should throw error if service.update fails', async () => {
+      const dto: UpdatePaymentDto = {
+        status: 'completed',
+        transactionId: 'tx123',
+        paidAt: '2025-06-02T12:00:00Z',
+      };
+
+      mockPaymentService.update.mockRejectedValueOnce(new Error('Update failed'));
+
+      await expect(controller.update({ id: 1, dto })).rejects.toThrow('Update failed');
+    });
   });
 
   describe('remove', () => {
@@ -119,5 +160,11 @@ describe('PaymentController', () => {
 
       expect(mockPaymentService.remove).toHaveBeenCalledWith(id);
     });
+
+    it('should throw error if service.remove fails', async () => {
+      mockPaymentService.remove.mockRejectedValueOnce(new Error('Remove failed'));
+
+      await expect(controller.remove(1)).rejects.toThrow('Remove failed');
+    });
   });
-});
+})

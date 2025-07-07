@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { PaymentService } from './payment.service';
-import { Payment } from './payment.entity';
-import { CreatePaymentDto } from './dto/createPayment.dto';
-import { UpdatePaymentDto } from './dto/updatePayment.dto';
+import { PaymentService } from '../../src/payment/services/payment.service'
+import { Payment } from '../../src/payment/entities/payment.entity';
+import { CreatePaymentDto } from '../../src/payment/dto/createPayment.dto';
+import { UpdatePaymentDto } from '../../src/payment/dto/updatePayment.dto';
 
 describe('PaymentService', () => {
   let service: PaymentService;
