@@ -11,7 +11,7 @@ import {
 import { UsersService } from './user.service';
 import { CreateUserDto } from '../../../Microservices/user-service/src/user/dto/createUser.dto';
 import { UpdateUserDto } from '../../../Microservices/user-service/src/user/dto/updateUser.dto';
-import { User } from '../../../Microservices/user-service/src/user/user.entity';
+import { User } from '../../../Microservices/user-service/src/user/entities/user.entity';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 

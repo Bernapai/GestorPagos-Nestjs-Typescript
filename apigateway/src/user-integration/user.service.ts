@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { CreateUserDto } from '../../../Microservices/user-service/src/user/dto/createUser.dto';
 import { UpdateUserDto } from '../../../Microservices/user-service/src/user/dto/updateUser.dto';
-import { User } from '../../../Microservices/user-service/src/user/user.entity';
+import { User } from '../../../Microservices/user-service/src/user/entities/user.entity';
 
 @Injectable()
 export class UsersService {
