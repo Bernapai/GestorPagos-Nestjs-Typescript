@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Invoice } from './schemas/invoice.schema';
-import { invoiceDto } from './dto/createInvoice.dto';
+import { Invoice } from '../schemas/invoice.schema';
+import { invoiceDto } from '../dto/createInvoice.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';

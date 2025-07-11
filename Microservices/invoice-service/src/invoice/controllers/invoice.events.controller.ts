@@ -2,8 +2,8 @@
 
 import { Controller } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
-import { InvoiceService } from './invoice.service';
-import { invoiceDto } from './dto/createInvoice.dto';
+import { InvoiceService } from '../services/invoice.service';
+import { invoiceDto } from '../dto/createInvoice.dto';
 
 @Controller()
 export class InvoiceEventsController {

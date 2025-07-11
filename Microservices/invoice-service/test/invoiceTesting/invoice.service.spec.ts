@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { InvoiceService } from './invoice.service';
+import { InvoiceService } from 'src/invoice/services/invoice.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { Invoice } from './schemas/invoice.schema';
-import { invoiceDto } from './dto/createInvoice.dto';
+import { Invoice } from '../../src/invoice/schemas/invoice.schema';
+import { invoiceDto } from '../../src/invoice/dto/createInvoice.dto';
 
 // Mocks
 const mockInvoiceModel = {

@@ -1,9 +1,9 @@
 // src/invoice/invoice.events.controller.spec.ts
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { InvoiceEventsController } from './invoice.events.controller';
-import { InvoiceService } from './invoice.service';
-import { invoiceDto } from './dto/createInvoice.dto';
+import { InvoiceEventsController } from 'src/invoice/controllers/invoice.events.controller';
+import { InvoiceService } from 'src/invoice/services/invoice.service';
+import { invoiceDto } from '../../src/invoice/dto/createInvoice.dto';
 
 describe('InvoiceEventsController', () => {
   let controller: InvoiceEventsController;
